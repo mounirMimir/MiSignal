@@ -153,7 +153,7 @@ SignalClass = {
 			Destroy = SignalPublicMethods.Destroy,
 		}
 
-		return self :: MiSignal<...any>
+		return self
 	end,
 }
 

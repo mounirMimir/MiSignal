@@ -22,7 +22,7 @@ export type ConnectionInternal =
 	& ConnectionPublicAttributes
 
 export type ConnectionClass = {
-	read new: (callback: (...any) -> (), parent: SignalInternal) -> ConnectionInternal,
+	new: (callback: (...any) -> (), parent: SignalInternal) -> ConnectionInternal,
 }
 
 --- Signal ---
@@ -32,12 +32,12 @@ type SignalPrivateAttributes = {
 }
 
 export type SignalPublicMethods<self, args...> = {
-	read Connect: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
-	read Once: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
-	read Wait: (self: self) -> args...,
-	read Fire: (self: self, args...) -> (),
-	read DisconnectAll: (self: self) -> (),
-	read Destroy: (self: self) -> (),
+	Connect: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
+	Once: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
+	Wait: (self: self) -> args...,
+	Fire: (self: self, args...) -> (),
+	DisconnectAll: (self: self) -> (),
+	Destroy: (self: self) -> (),
 }
 
 export type SignalObject<args...> = SignalPublicMethods<SignalObject<args...>, args...>
