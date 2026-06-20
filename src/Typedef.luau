@@ -40,8 +40,8 @@ export type SignalPublicMethods<self, args...> = {
 	Destroy: (self: self) -> (),
 }
 
-export type SignalObject<args...> = SignalPublicMethods<SignalObject<args...>, args...>
-export type SignalInternal = SignalPublicMethods<SignalInternal, ...any> & SignalPrivateAttributes
+export type SignalObject<args...> = SignalPublicMethods<any, args...>
+export type SignalInternal = SignalPublicMethods<any, ...any> & SignalPrivateAttributes
 
 export type SignalClass = {
 	new: () -> SignalObject<...any>,
