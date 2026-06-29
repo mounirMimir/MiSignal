@@ -1,4 +1,7 @@
 --!strict
+const Flatten = require("@self/Flatten")
+type Flatten<t> = Flatten.FlattenTable<t>
+
 --- Connection ---
 type ConnectionPublicAttributes = {
 	Connected: boolean,
@@ -15,11 +18,10 @@ export type ConnectionPublicMethods<self> = {
 	Disconnect: (self: self) -> (),
 }
 
-export type ConnectionObject = ConnectionPublicMethods<ConnectionObject> & ConnectionPublicAttributes
-export type ConnectionInternal =
-	ConnectionPublicMethods<ConnectionInternal>
-	& ConnectionPrivateAttributes
-	& ConnectionPublicAttributes
+export type ConnectionObject = Flatten<ConnectionPublicMethods<any> & ConnectionPublicAttributes>
+export type ConnectionInternal = Flatten<
+	ConnectionPublicMethods<any> & ConnectionPrivateAttributes & ConnectionPublicAttributes
+>
 
 export type ConnectionClass = {
 	new: (callback: (...any) -> (), parent: SignalInternal) -> ConnectionInternal,

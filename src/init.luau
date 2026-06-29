@@ -141,7 +141,7 @@ local SignalPublicMethods: Typedef.SignalPublicMethods<SignalInternal> = {
 }
 
 SignalClass = {
-	new = function()
+	new = function(): MiSignal<...any>
 		local self: SignalInternal = {
 			_head = nil,
 			_tail = nil,
