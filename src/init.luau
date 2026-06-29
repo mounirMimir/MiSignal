@@ -37,7 +37,7 @@ local ConnectionPublicMethos: Typedef.ConnectionPublicMethods<ConnectionInternal
 		if not self.Connected then
 			return
 		end
-		(self :: any).Connected = false
+		self.Connected = false
 
 		local prev, next = self._prev, self._next
 		local parent = self._parent

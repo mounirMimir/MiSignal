@@ -1,10 +1,10 @@
 --!strict
-const Flatten = require("@self/Flatten")
-type Flatten<t> = Flatten.FlattenTable<t>
+const Util = require("@self/Util")
+type Flatten<t> = Util.FlattenTable<t>
 
 --- Connection ---
 type ConnectionPublicAttributes = {
-	Connected: boolean,
+	read Connected: boolean,
 }
 
 type ConnectionPrivateAttributes = {
@@ -19,9 +19,7 @@ export type ConnectionPublicMethods<self> = {
 }
 
 export type ConnectionObject = Flatten<ConnectionPublicMethods<any> & ConnectionPublicAttributes>
-export type ConnectionInternal = Flatten<
-	ConnectionPublicMethods<any> & ConnectionPrivateAttributes & ConnectionPublicAttributes
->
+export type ConnectionInternal = Util.ReadWrite<ConnectionObject> & ConnectionPrivateAttributes
 
 export type ConnectionClass = {
 	new: (callback: (...any) -> (), parent: SignalInternal) -> ConnectionInternal,
@@ -34,12 +32,12 @@ type SignalPrivateAttributes = {
 }
 
 export type SignalPublicMethods<self, args...> = {
-	Connect: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
-	Once: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
-	Wait: (self: self) -> args...,
-	Fire: (self: self, args...) -> (),
-	DisconnectAll: (self: self) -> (),
-	Destroy: (self: self) -> (),
+	read Connect: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
+	read Once: (self: self, Callback: (args...) -> ()) -> ConnectionObject,
+	read Wait: (self: self) -> args...,
+	read Fire: (self: self, args...) -> (),
+	read DisconnectAll: (self: self) -> (),
+	read Destroy: (self: self) -> (),
 }
 
 export type SignalObject<args...> = SignalPublicMethods<any, args...>

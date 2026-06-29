@@ -192,23 +192,22 @@ export type function FlattenTable(input: type)
 	return output
 end
 
-export type function Mutable(input: type)
+export type function ReadWrite(input: typeof(types.newtable()))
 	if input.tag ~= "table" then
-		return input
+		return types.never
 	end
 
-	local output = types.copy(input)
+	for key, value in input:properties() do
+		local value_read, value_write = value.read, value.write
 
-	for key, prop in output:properties() do
-		-- rebuild property without readonly
-		output:setproperty(key, {
-			read = false,
-			write = prop.write,
-			type = RemoveReadonly(prop.type),
-		})
+		if value_read and not value_write then
+			input:setproperty(key, value_read)
+		elseif value_write and not value_read then
+			input:setproperty(key, value_write)
+		end
 	end
 
-	return output
+	return input
 end
 
 return nil
